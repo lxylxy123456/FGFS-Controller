@@ -145,12 +145,12 @@ class ViewController: UIViewController {
         let r_angle: Double = v_angle(vi, v_proj(rel_j, vk), vk)
         
         // Output
-        Ax.text = ax.description
-        Ay.text = ay.description
-        Az.text = az.description
-        Mx.text = mx.description
-        My.text = my.description
-        Mz.text = mz.description
+        Ax.text = Float(ax).description
+        Ay.text = Float(ay).description
+        Az.text = Float(az).description
+        Mx.text = Float(mx).description
+        My.text = Float(my).description
+        Mz.text = Float(mz).description
         return [a_angle, e_angle, r_angle]
     }
 
