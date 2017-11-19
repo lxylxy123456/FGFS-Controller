@@ -39,6 +39,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var Mx: UILabel!
     @IBOutlet weak var My: UILabel!
     @IBOutlet weak var Mz: UILabel!
+    @IBOutlet weak var Aileron_value: UILabel!
+    @IBOutlet weak var Elevator_value: UILabel!
+    @IBOutlet weak var Rudder_value: UILabel!
+    @IBOutlet weak var Throttle_value: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,22 +127,6 @@ class ViewController: UIViewController {
         }
         // unused: motionManager.gyroData
         // unused: motionManager.deviceMotion
-        //    Math
-        //        q = sqrt(2); q = 1 / sqrt(2); h = 0.5
-        //            Ail  Ele x   y   z  y/x z/x y/(z**2+x**2)
-        //             0   0  -1   0   0   0   0   0
-        //            -1   0  -q   q   0  -1   0  -1
-        //             1   0  -q  -q   0   1   0   1
-        //             0   1  -q   0  -q   0   1   0
-        //             0  -1  -q   0   q   0  -1   0
-        //            -1  -1  -h   q   h  -s  -1  -1
-        //             1  -1  -h  -q   h   s  -1   1
-        //            -1   1  -h   q  -h  -s   1  -1
-        //             1   1  -h  -q  -h   s   1   1
-        //        c = 1 / arctan(1) == 0.7853981633974483
-        //        Ail = c * arctan(y / (z**2+x**2))
-        //        Ele = c * arctan(z / x)
-        //        Refrain to [-1, 1]
         let vw: [Double] = [ ax,  ay,  az]  // 重力相对于手机的方向，和地面垂直
         let vn: [Double] = [ mx,  my,  mz]  // 北方
         let vi: [Double] = [1.0, 0.0, 0.0]  // x 单位向量(相对手机固定)，很少平行地面
@@ -179,9 +167,11 @@ class ViewController: UIViewController {
     }
 
     @objc func udp_send(aileron: Float, elevator: Float, rudder: Float, throttle: Float) {
-        var variables = [aileron, elevator, rudder, throttle]
+        var variables: [Float] = [aileron, elevator, rudder, throttle]
+        var output_ui_obj: [UILabel] = [Aileron_value, Elevator_value, Rudder_value, Throttle_value]
         var data = Data(count: 0)
         for i in 0...3 {
+            output_ui_obj[i].text[i] = variables[i].description
             data.append(Data(Data(buffer: UnsafeBufferPointer(start: &variables[i], count: 1)).reversed())) // 通过 reversed 得到 big-endian 的结果
         }
         _ = client?.send(data: data)
@@ -222,9 +212,9 @@ class ViewController: UIViewController {
         userDefaults.set(Port.text!, forKey: "Port")
         
         motionManager.startAccelerometerUpdates()
-        motionManager.startGyroUpdates()
+        // motionManager.startGyroUpdates()
         motionManager.startMagnetometerUpdates()
-        motionManager.startDeviceMotionUpdates()
+        // motionManager.startDeviceMotionUpdates()
         
         if timer != nil {
             timer.invalidate()
