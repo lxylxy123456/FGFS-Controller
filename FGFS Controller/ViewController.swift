@@ -235,6 +235,12 @@ class ViewController: UIViewController {
         
         timer = Timer.scheduledTimer(timeInterval: 1.0 / frequency!, target: self, selector: #selector(ViewController.update), userInfo: nil, repeats: true)
     }
+    @IBAction func Stop(_ sender: Any) {
+        if timer != nil {
+            timer.invalidate()
+            client?.close()
+        }
+    }
     
 }
 
