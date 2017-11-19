@@ -9,7 +9,6 @@
 import UIKit
 import CoreMotion
 import SwiftSocket
-// import CocoaAsyncSocket
 
 class ViewController: UIViewController {
 
