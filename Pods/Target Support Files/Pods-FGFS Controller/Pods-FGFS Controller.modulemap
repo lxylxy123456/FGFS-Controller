@@ -1,0 +1,6 @@
+framework module Pods_FGFS_Controller {
+  umbrella header "Pods-FGFS Controller-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,8 @@
+https://guides.cocoapods.org/using/the-podfile.html
+https://cocoapods.org/
+	sudo gem install cocoapods
+https://guides.cocoapods.org/syntax/podfile.html
+	在项目文件夹创建 Podfile ，根据语法添加需要的工程文件
+https://cocoapods.org/
+	在项目文件夹运行 pod install ，然后改用自动生成的 .xcworkspace 工作
+
