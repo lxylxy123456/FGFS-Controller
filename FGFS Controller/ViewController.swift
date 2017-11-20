@@ -36,7 +36,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var Ay: UILabel!
     @IBOutlet weak var Az: UILabel!
     @IBOutlet weak var Hdg: UILabel!
-    @IBOutlet weak var Info: UILabel!
+    @IBOutlet weak var Info: UITextView!
     @IBOutlet weak var Aileron_value: UILabel!
     @IBOutlet weak var Elevator_value: UILabel!
     @IBOutlet weak var Rudder_value: UILabel!
@@ -165,8 +165,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             output_ui_obj[i].text = variables[i].description
             data.append(Data(Data(buffer: UnsafeBufferPointer(start: &variables[i], count: 1)).reversed())) // 通过 reversed 得到 big-endian 的结果
         }
-        let result: Result? = client?.send(data: data)
-        Info.text = result?.error.debugDescription
+        if let result: Result? = client?.send(data: data){
+            Info.text = result?.error.debugDescription
+        }
     }
 
     @objc func update() {

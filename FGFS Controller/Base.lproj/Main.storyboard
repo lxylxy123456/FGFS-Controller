@@ -235,12 +235,12 @@
                                                     <constraint firstItem="MzP-dz-L66" firstAttribute="width" secondItem="lHp-Ju-syF" secondAttribute="width" id="kxw-aW-hOf"/>
                                                 </constraints>
                                             </stackView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RiX-N0-7Yw">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Info" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gGU-0G-yCL">
                                                 <rect key="frame" x="0.0" y="220" width="455.5" height="94.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="cjn-BB-0Jv">
                                                 <rect key="frame" x="0.0" y="322.5" width="455.5" height="20.5"/>
                                                 <subviews>
@@ -323,6 +323,7 @@
                         <outlet property="Frq" destination="rEA-ff-ZhO" id="uWi-VN-y2R"/>
                         <outlet property="Hdg" destination="8CF-Lt-e3D" id="CWy-qN-jqM"/>
                         <outlet property="IP_Address" destination="ABK-mv-emb" id="1r1-fV-cvz"/>
+                        <outlet property="Info" destination="gGU-0G-yCL" id="PEF-3F-R7I"/>
                         <outlet property="Port" destination="D0G-J3-y09" id="2Po-Wn-JQN"/>
                         <outlet property="Rudder" destination="DyW-YE-XG0" id="yEA-NU-pnE"/>
                         <outlet property="Rudder_value" destination="2u3-ol-D3E" id="caO-7k-h7R"/>
