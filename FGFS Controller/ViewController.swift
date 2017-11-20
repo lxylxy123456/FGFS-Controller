@@ -41,11 +41,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var Mx: UILabel!
     @IBOutlet weak var My: UILabel!
     @IBOutlet weak var Mz: UILabel!
+    @IBOutlet weak var Hdg: UILabel!
+    @IBOutlet weak var Info: UITextField!
     @IBOutlet weak var Aileron_value: UILabel!
     @IBOutlet weak var Elevator_value: UILabel!
     @IBOutlet weak var Rudder_value: UILabel!
     @IBOutlet weak var Throttle_value: UILabel!
-    @IBOutlet weak var Info: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -173,8 +174,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         let e_angle: Double = v_angle(v_proj(v_neg(vw), vj), vi, vj)
         let a_angle: Double = v_angle(vi, v_proj(v_neg(vw), vk), vk)
-        let r_angle: Double = hdg / 180 * Double.pi
-        Info.text = Float(r_angle).description + ";"
+        let r_angle: Double = hdg
+        Hdg.text = Float(r_angle).description
         // let e_angle: Double = v_angle(v_proj(vk, rel_j), rel_i, rel_j)
         // let a_angle: Double = v_angle(rel_i, v_proj(vk, rel_k), rel_k)
         // let r_angle: Double = v_angle(vi, v_proj(rel_j, vk), vk)
@@ -210,7 +211,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             data.append(Data(Data(buffer: UnsafeBufferPointer(start: &variables[i], count: 1)).reversed())) // 通过 reversed 得到 big-endian 的结果
         }
         let result: Result? = client?.send(data: data)
-        Info.text = Info.text! + (result?.error.debugDescription)!
+        Info.text = result?.error.debugDescription
     }
 
     @objc func update() {
