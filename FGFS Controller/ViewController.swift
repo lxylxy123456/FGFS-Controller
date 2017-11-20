@@ -19,9 +19,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var ax: Double = -0.8
     var ay: Double =  0.2
     var az: Double = -0.4
-    var mx: Double = -36
-    var my: Double = -14
-    var mz: Double = -14
     var hdg: Double = 1.5
     var aileron_zero: Double = 0.0
     var elevator_zero: Double = 0.0
@@ -38,9 +35,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var Ax: UILabel!
     @IBOutlet weak var Ay: UILabel!
     @IBOutlet weak var Az: UILabel!
-    @IBOutlet weak var Mx: UILabel!
-    @IBOutlet weak var My: UILabel!
-    @IBOutlet weak var Mz: UILabel!
     @IBOutlet weak var Hdg: UILabel!
     @IBOutlet weak var Info: UITextField!
     @IBOutlet weak var Aileron_value: UILabel!
@@ -126,21 +120,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         ax = ax - Double(0.1 * Float(arc4random()) / Float(UINT32_MAX))
         ay = ay - Double(0.1 * Float(arc4random()) / Float(UINT32_MAX))
         az = az - Double(0.1 * Float(arc4random()) / Float(UINT32_MAX))
-        mx = mx - Double(Float(arc4random()) / Float(UINT32_MAX))
-        my = my - Double(Float(arc4random()) / Float(UINT32_MAX))
-        mz = mz - Double(Float(arc4random()) / Float(UINT32_MAX))
-        hdg = hdg - Double(Float(arc4random()) / Float(UINT32_MAX))
-        if let deviceMotionData = motionManager.deviceMotion {
-            mx = deviceMotionData.magneticField.field.x
-            my = deviceMotionData.magneticField.field.y
-            mz = deviceMotionData.magneticField.field.z
-            // hdg = deviceMotionData.heading
-        }
-        if let gyroData = motionManager.gyroData {
-            mx = gyroData.rotationRate.x
-            my = gyroData.rotationRate.y
-            mz = gyroData.rotationRate.z
-        }
         if let headingData = locationManager.heading {
             hdg = headingData.magneticHeading * Double.pi / 180
         }
@@ -149,44 +128,20 @@ class ViewController: UIViewController, UITextFieldDelegate {
             ay = accelerometerData.acceleration.y
             az = accelerometerData.acceleration.z
         }
-        /*
-        if let magnetometerData = motionManager.magnetometerData {
-            mx = magnetometerData.magneticField.x
-            my = magnetometerData.magneticField.y
-            mz = magnetometerData.magneticField.z
-        }
-        */
-        // unused: motionManager.accelerometerData
-        // unused: motionManager.gyroData
-        // unused: motionManager.magnetometerData
         let vw: [Double] = [ ax,  ay,  az]  // 重力相对于手机的方向，和地面垂直
-        // let vn: [Double] = [ mx,  my,  mz]  // 北方
         let vi: [Double] = [1.0, 0.0, 0.0]  // x 单位向量(相对手机固定)，很少平行地面
         let vj: [Double] = [0.0, 1.0, 0.0]  // y 单位向量(相对手机固定)，很少垂直地面
         let vk: [Double] = [0.0, 0.0, 1.0]  // z 单位向量(相对手机固定)
-        // let pn: [Double] = v_proj(vn, vw)   // vn 在地面的投影
-        // let new_i: [Double] = v_hat(pn)             // pn    -> i
-        // let new_k: [Double] = v_hat(v_neg(vw))      // -vw   -> k
-        // let new_j: [Double] = v_cross(new_k, new_i) // k x i -> j
-        // let rel_i: [Double] = [v_dot(vi, new_i), v_dot(vi, new_j), v_dot(vi, new_k)]
-        // let rel_j: [Double] = [v_dot(vj, new_i), v_dot(vj, new_j), v_dot(vj, new_k)]
-        // let rel_k: [Double] = [v_dot(vk, new_i), v_dot(vk, new_j), v_dot(vk, new_k)]
         
         let e_angle: Double = v_angle(v_proj(v_neg(vw), vj), vi, vj)
         let a_angle: Double = v_angle(vi, v_proj(v_neg(vw), vk), vk)
         let r_angle: Double = hdg
         Hdg.text = Float(r_angle).description
-        // let e_angle: Double = v_angle(v_proj(vk, rel_j), rel_i, rel_j)
-        // let a_angle: Double = v_angle(rel_i, v_proj(vk, rel_k), rel_k)
-        // let r_angle: Double = v_angle(vi, v_proj(rel_j, vk), vk)
         
         // Output
         Ax.text = Float(ax).description
         Ay.text = Float(ay).description
         Az.text = Float(az).description
-        Mx.text = Float(mx).description
-        My.text = Float(my).description
-        Mz.text = Float(mz).description
         return [a_angle, e_angle, r_angle]
     }
 
