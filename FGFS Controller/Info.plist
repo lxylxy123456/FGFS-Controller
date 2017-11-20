@@ -29,6 +29,7 @@
 		<string>armv7</string>
 		<string>accelerometer</string>
 		<string>magnetometer</string>
+		<string>wifi</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

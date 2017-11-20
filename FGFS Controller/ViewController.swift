@@ -10,7 +10,7 @@ import UIKit
 import CoreMotion
 import SwiftSocket
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
 
     let motionManager = CMMotionManager()
     var timer: Timer!
@@ -42,6 +42,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var Elevator_value: UILabel!
     @IBOutlet weak var Rudder_value: UILabel!
     @IBOutlet weak var Throttle_value: UILabel!
+    @IBOutlet weak var Info: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,12 +57,22 @@ class ViewController: UIViewController {
             }
         }
         Throttle.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2.0)
+        
         let userDefaults: UserDefaults = UserDefaults.standard
         Frq.text = get_string(userDefaults: userDefaults, forKey: "Frq", default_val: "12")
         IP_Address.text = get_string(userDefaults: userDefaults, forKey: "IP_Address", default_val: "10.100.0.10")
         Port.text = get_string(userDefaults: userDefaults, forKey: "Port", default_val: "6789")
+        
+        IP_Address.delegate = self
+        Port.delegate = self
+        Frq.delegate = self
     }
 
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        self.view.endEditing(true)
+        return false
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -114,6 +125,15 @@ class ViewController: UIViewController {
         mx = mx - Double(Float(arc4random()) / Float(UINT32_MAX))
         my = my - Double(Float(arc4random()) / Float(UINT32_MAX))
         mz = mz - Double(Float(arc4random()) / Float(UINT32_MAX))
+        if let deviceMotionData = motionManager.deviceMotion {
+            ax = deviceMotionData.gravity.x
+            ax = deviceMotionData.gravity.y
+            ax = deviceMotionData.gravity.z
+            mx = deviceMotionData.magneticField.field.x
+            my = deviceMotionData.magneticField.field.y
+            mz = deviceMotionData.magneticField.field.z
+        }
+        /*
         if let accelerometerData = motionManager.accelerometerData {
             ax = accelerometerData.acceleration.x
             ay = accelerometerData.acceleration.y
@@ -124,8 +144,10 @@ class ViewController: UIViewController {
             my = magnetometerData.magneticField.y
             mz = magnetometerData.magneticField.z
         }
+        */
+        // unused: motionManager.accelerometerData
         // unused: motionManager.gyroData
-        // unused: motionManager.deviceMotion
+        // unused: motionManager.magnetometerData
         let vw: [Double] = [ ax,  ay,  az]  // 重力相对于手机的方向，和地面垂直
         let vn: [Double] = [ mx,  my,  mz]  // 北方
         let vi: [Double] = [1.0, 0.0, 0.0]  // x 单位向量(相对手机固定)，很少平行地面
@@ -173,7 +195,8 @@ class ViewController: UIViewController {
             output_ui_obj[i].text = variables[i].description
             data.append(Data(Data(buffer: UnsafeBufferPointer(start: &variables[i], count: 1)).reversed())) // 通过 reversed 得到 big-endian 的结果
         }
-        _ = client?.send(data: data)
+        let result: Result? = client?.send(data: data)
+        Info.text = result?.error.debugDescription
     }
 
     @objc func update() {
@@ -210,10 +233,10 @@ class ViewController: UIViewController {
         userDefaults.set(IP_Address.text!, forKey: "IP_Address")
         userDefaults.set(Port.text!, forKey: "Port")
         
-        motionManager.startAccelerometerUpdates()
+        // motionManager.startAccelerometerUpdates()
         // motionManager.startGyroUpdates()
-        motionManager.startMagnetometerUpdates()
-        // motionManager.startDeviceMotionUpdates()
+        // motionManager.startMagnetometerUpdates()
+        motionManager.startDeviceMotionUpdates()
         
         if timer != nil {
             timer.invalidate()
