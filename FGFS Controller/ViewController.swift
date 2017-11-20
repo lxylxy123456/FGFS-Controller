@@ -153,16 +153,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let vi: [Double] = [1.0, 0.0, 0.0]  // x 单位向量(相对手机固定)，很少平行地面
         let vj: [Double] = [0.0, 1.0, 0.0]  // y 单位向量(相对手机固定)，很少垂直地面
         let vk: [Double] = [0.0, 0.0, 1.0]  // z 单位向量(相对手机固定)
-        let pn: [Double] = v_proj(vn, vw)   // vn 在地面的投影
-        let new_i: [Double] = v_hat(pn)             // pn    -> i
-        let new_k: [Double] = v_hat(v_neg(vw))      // -vw   -> k
-        let new_j: [Double] = v_cross(new_k, new_i) // k x i -> j
+        // let pn: [Double] = v_proj(vn, vw)   // vn 在地面的投影
+        // let new_i: [Double] = v_hat(pn)             // pn    -> i
+        // let new_k: [Double] = v_hat(v_neg(vw))      // -vw   -> k
+        // let new_j: [Double] = v_cross(new_k, new_i) // k x i -> j
         // let rel_i: [Double] = [v_dot(vi, new_i), v_dot(vi, new_j), v_dot(vi, new_k)]
         // let rel_j: [Double] = [v_dot(vj, new_i), v_dot(vj, new_j), v_dot(vj, new_k)]
         // let rel_k: [Double] = [v_dot(vk, new_i), v_dot(vk, new_j), v_dot(vk, new_k)]
         
-        let e_angle: Double = v_angle(vi, vw, vj)
-        let a_angle: Double = v_angle(vw, vi, vk)
+        let e_angle: Double = v_angle(v_proj(v_neg(vw), vj), vi, vj)
+        let a_angle: Double = v_angle(vi, v_proj(v_neg(vw), vk), vk)
         let r_angle: Double = hdg / 180 * Double.pi
         Info.text = Float(r_angle).description + ";"
         // let e_angle: Double = v_angle(v_proj(vk, rel_j), rel_i, rel_j)
