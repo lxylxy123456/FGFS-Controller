@@ -174,7 +174,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         let e_angle: Double = v_angle(v_proj(v_neg(vw), vj), vi, vj)
         let a_angle: Double = v_angle(vi, v_proj(v_neg(vw), vk), vk)
-        let r_angle: Double = hdg
+        let r_angle: Double = -hdg
         Hdg.text = Float(r_angle).description
         // let e_angle: Double = v_angle(v_proj(vk, rel_j), rel_i, rel_j)
         // let a_angle: Double = v_angle(rel_i, v_proj(vk, rel_k), rel_k)
