@@ -8,11 +8,13 @@
 
 import UIKit
 import CoreMotion
+import CoreLocation
 import SwiftSocket
 
 class ViewController: UIViewController, UITextFieldDelegate {
 
     let motionManager = CMMotionManager()
+    let locationManager = CLLocationManager()
     var timer: Timer!
     var ax: Double = -0.8
     var ay: Double =  0.2
@@ -131,7 +133,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
             mx = deviceMotionData.magneticField.field.x
             my = deviceMotionData.magneticField.field.y
             mz = deviceMotionData.magneticField.field.z
-            hdg = deviceMotionData.heading
+            // hdg = deviceMotionData.heading
+        }
+        if let gyroData = motionManager.gyroData {
+            mx = gyroData.rotationRate.x
+            my = gyroData.rotationRate.y
+            mz = gyroData.rotationRate.z
+        }
+        if let headingData = locationManager.heading {
+            hdg = headingData.magneticHeading * Double.pi / 180
         }
         if let accelerometerData = motionManager.accelerometerData {
             ax = accelerometerData.acceleration.x
@@ -149,7 +159,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         // unused: motionManager.gyroData
         // unused: motionManager.magnetometerData
         let vw: [Double] = [ ax,  ay,  az]  // 重力相对于手机的方向，和地面垂直
-        let vn: [Double] = [ mx,  my,  mz]  // 北方
+        // let vn: [Double] = [ mx,  my,  mz]  // 北方
         let vi: [Double] = [1.0, 0.0, 0.0]  // x 单位向量(相对手机固定)，很少平行地面
         let vj: [Double] = [0.0, 1.0, 0.0]  // y 单位向量(相对手机固定)，很少垂直地面
         let vk: [Double] = [0.0, 0.0, 1.0]  // z 单位向量(相对手机固定)
@@ -238,9 +248,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         userDefaults.set(Port.text!, forKey: "Port")
         
         motionManager.startAccelerometerUpdates()
-        // motionManager.startGyroUpdates()
+        motionManager.startGyroUpdates()
         // motionManager.startMagnetometerUpdates()
         motionManager.startDeviceMotionUpdates()
+        locationManager.startUpdatingHeading()
         
         if timer != nil {
             timer.invalidate()
