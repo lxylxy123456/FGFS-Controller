@@ -164,6 +164,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let e_angle: Double = v_angle(vi, vw, vj)
         let a_angle: Double = v_angle(vw, vi, vk)
         let r_angle: Double = hdg / 180 * Double.pi
+        Info.text = Float(r_angle).description + ";"
         // let e_angle: Double = v_angle(v_proj(vk, rel_j), rel_i, rel_j)
         // let a_angle: Double = v_angle(rel_i, v_proj(vk, rel_k), rel_k)
         // let r_angle: Double = v_angle(vi, v_proj(rel_j, vk), vk)
@@ -199,7 +200,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             data.append(Data(Data(buffer: UnsafeBufferPointer(start: &variables[i], count: 1)).reversed())) // 通过 reversed 得到 big-endian 的结果
         }
         let result: Result? = client?.send(data: data)
-        Info.text = result?.error.debugDescription
+        Info.text = Info.text! + (result?.error.debugDescription)!
     }
 
     @objc func update() {
