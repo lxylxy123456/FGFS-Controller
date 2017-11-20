@@ -20,10 +20,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var mx: Double = -36
     var my: Double = -14
     var mz: Double = -14
+    var hdg: Double = 1.5
     var aileron_zero: Double = 0.0
     var elevator_zero: Double = 0.0
     var rudder_zero: Double = 0.0
-    var client: UDPClient? = nil;
+    var client: UDPClient? = nil
     
     @IBOutlet weak var IP_Address: UITextField!
     @IBOutlet weak var Port: UITextField!
@@ -125,20 +126,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
         mx = mx - Double(Float(arc4random()) / Float(UINT32_MAX))
         my = my - Double(Float(arc4random()) / Float(UINT32_MAX))
         mz = mz - Double(Float(arc4random()) / Float(UINT32_MAX))
+        hdg = hdg - Double(Float(arc4random()) / Float(UINT32_MAX))
         if let deviceMotionData = motionManager.deviceMotion {
-            ax = deviceMotionData.gravity.x
-            ax = deviceMotionData.gravity.y
-            ax = deviceMotionData.gravity.z
             mx = deviceMotionData.magneticField.field.x
             my = deviceMotionData.magneticField.field.y
             mz = deviceMotionData.magneticField.field.z
+            hdg = deviceMotionData.heading
         }
-        /*
         if let accelerometerData = motionManager.accelerometerData {
             ax = accelerometerData.acceleration.x
             ay = accelerometerData.acceleration.y
             az = accelerometerData.acceleration.z
         }
+        /*
         if let magnetometerData = motionManager.magnetometerData {
             mx = magnetometerData.magneticField.x
             my = magnetometerData.magneticField.y
@@ -157,13 +157,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let new_i: [Double] = v_hat(pn)             // pn    -> i
         let new_k: [Double] = v_hat(v_neg(vw))      // -vw   -> k
         let new_j: [Double] = v_cross(new_k, new_i) // k x i -> j
-        let rel_i: [Double] = [v_dot(vi, new_i), v_dot(vi, new_j), v_dot(vi, new_k)]
-        let rel_j: [Double] = [v_dot(vj, new_i), v_dot(vj, new_j), v_dot(vj, new_k)]
-        let rel_k: [Double] = [v_dot(vk, new_i), v_dot(vk, new_j), v_dot(vk, new_k)]
+        // let rel_i: [Double] = [v_dot(vi, new_i), v_dot(vi, new_j), v_dot(vi, new_k)]
+        // let rel_j: [Double] = [v_dot(vj, new_i), v_dot(vj, new_j), v_dot(vj, new_k)]
+        // let rel_k: [Double] = [v_dot(vk, new_i), v_dot(vk, new_j), v_dot(vk, new_k)]
         
-        let e_angle: Double = v_angle(v_proj(vk, rel_j), rel_i, rel_j)
-        let a_angle: Double = v_angle(rel_i, v_proj(vk, rel_k), rel_k)
-        let r_angle: Double = v_angle(vi, v_proj(rel_j, vk), vk)
+        let e_angle: Double = v_angle(vi, vw, vj)
+        let a_angle: Double = v_angle(vw, vi, vk)
+        let r_angle: Double = hdg / 180 * Double.pi
+        // let e_angle: Double = v_angle(v_proj(vk, rel_j), rel_i, rel_j)
+        // let a_angle: Double = v_angle(rel_i, v_proj(vk, rel_k), rel_k)
+        // let r_angle: Double = v_angle(vi, v_proj(rel_j, vk), vk)
         
         // Output
         Ax.text = Float(ax).description
@@ -233,7 +236,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         userDefaults.set(IP_Address.text!, forKey: "IP_Address")
         userDefaults.set(Port.text!, forKey: "Port")
         
-        // motionManager.startAccelerometerUpdates()
+        motionManager.startAccelerometerUpdates()
         // motionManager.startGyroUpdates()
         // motionManager.startMagnetometerUpdates()
         motionManager.startDeviceMotionUpdates()
