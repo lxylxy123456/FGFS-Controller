@@ -36,7 +36,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var Ay: UILabel!
     @IBOutlet weak var Az: UILabel!
     @IBOutlet weak var Hdg: UILabel!
-    @IBOutlet weak var Info: UITextField!
+    @IBOutlet weak var Info: UILabel!
     @IBOutlet weak var Aileron_value: UILabel!
     @IBOutlet weak var Elevator_value: UILabel!
     @IBOutlet weak var Rudder_value: UILabel!
