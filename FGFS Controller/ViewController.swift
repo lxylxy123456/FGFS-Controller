@@ -121,7 +121,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         ay = ay - Double(0.1 * Float(arc4random()) / Float(UINT32_MAX))
         az = az - Double(0.1 * Float(arc4random()) / Float(UINT32_MAX))
         if let headingData = locationManager.heading {
-            hdg = headingData.magneticHeading * Double.pi / 180
+            hdg = headingData.magneticHeading
         }
         if let accelerometerData = motionManager.accelerometerData {
             ax = accelerometerData.acceleration.x
@@ -135,13 +135,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         let e_angle: Double = v_angle(v_proj(v_neg(vw), vj), vi, vj)
         let a_angle: Double = v_angle(vi, v_proj(v_neg(vw), vk), vk)
-        let r_angle: Double = hdg
-        Hdg.text = Float(r_angle).description
+        let r_angle: Double = -(hdg * Double.pi / 180)
         
         // Output
         Ax.text = Float(ax).description
         Ay.text = Float(ay).description
         Az.text = Float(az).description
+        Hdg.text = Float(hdg).description
         return [a_angle, e_angle, r_angle]
     }
 
