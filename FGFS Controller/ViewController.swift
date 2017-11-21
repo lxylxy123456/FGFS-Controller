@@ -77,10 +77,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
         Frq.text = get_string(userDefaults: userDefaults, forKey: "Frq", default_val: "12")
         IP_Address.text = get_string(userDefaults: userDefaults, forKey: "IP_Address", default_val: "10.100.0.10")
         Port.text = get_string(userDefaults: userDefaults, forKey: "Port", default_val: "6789")
-        Aileron_factor.text = get_string(userDefaults: userDefaults, forKey: "Aileron_factor", default_val: "1.0")
+        Aileron_factor.text  = get_string(userDefaults: userDefaults, forKey: "Aileron_factor", default_val: "1.0")
         Elevator_factor.text = get_string(userDefaults: userDefaults, forKey: "Elevator_factor", default_val: "1.0")
-        Rudder_factor.text = get_string(userDefaults: userDefaults, forKey: "Rudder_factor", default_val: "1.5")
-        Throttle_copy.text = get_string(userDefaults: userDefaults, forKey: "Throttle_copy", default_val: "3")
+        Rudder_factor.text   = get_string(userDefaults: userDefaults, forKey: "Rudder_factor", default_val: "1.5")
+        Aileron_copy.text    = get_string(userDefaults: userDefaults, forKey: "Aileron_copy", default_val: "1")
+        Elevator_copy.text   = get_string(userDefaults: userDefaults, forKey: "Elevator_copy", default_val: "1")
+        Rudder_copy.text     = get_string(userDefaults: userDefaults, forKey: "Rudder_copy", default_val: "1")
+        Throttle_copy.text   = get_string(userDefaults: userDefaults, forKey: "Throttle_copy", default_val: "3")
         
         IP_Address.delegate = self
         Port.delegate = self
@@ -178,7 +181,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @objc func udp_send(aileron: Float, elevator: Float, rudder: Float, throttle: Float) {
         var variables: [Float] = [aileron, elevator, rudder, throttle]
         var output_ui_obj: [UILabel] = [Aileron_value, Elevator_value, Rudder_value, Throttle_value]
-        var copy_number: [Int] = [1, 1, 1, Int(Throttle_copy.text!)!]
+        var copy_number: [Int] = [Int(Aileron_copy.text!)!, Int(Elevator_copy.text!)!, Int(Rudder_copy.text!)!, Int(Throttle_copy.text!)!]
         var data = Data(count: 0)
         for i in 0...3 {
             output_ui_obj[i].text = variables[i].description
@@ -225,13 +228,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let port:Int? = Int(Port.text!)
         
         let userDefaults: UserDefaults = UserDefaults.standard
-        userDefaults.set(Frq.text!, forKey: "Frq")
-        userDefaults.set(IP_Address.text!, forKey: "IP_Address")
-        userDefaults.set(Port.text!, forKey: "Port")
-        userDefaults.set(Aileron_factor.text!, forKey: "Aileron_factor")
+        userDefaults.set(Frq.text!,             forKey: "Frq")
+        userDefaults.set(IP_Address.text!,      forKey: "IP_Address")
+        userDefaults.set(Port.text!,            forKey: "Port")
+        userDefaults.set(Aileron_factor.text!,  forKey: "Aileron_factor")
         userDefaults.set(Elevator_factor.text!, forKey: "Elevator_factor")
-        userDefaults.set(Rudder_factor.text!, forKey: "Rudder_factor")
-        userDefaults.set(Throttle_copy.text!, forKey: "Throttle_copy")
+        userDefaults.set(Rudder_factor.text!,   forKey: "Rudder_factor")
+        userDefaults.set(Aileron_copy.text!,    forKey: "Aileron_copy")
+        userDefaults.set(Elevator_copy.text!,   forKey: "Elevator_copy")
+        userDefaults.set(Rudder_copy.text!,     forKey: "Rudder_copy")
+        userDefaults.set(Throttle_copy.text!,   forKey: "Throttle_copy")
         
         motionManager.startAccelerometerUpdates()
         motionManager.startGyroUpdates()
