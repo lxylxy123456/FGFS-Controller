@@ -77,6 +77,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         Aileron_factor.text = get_string(userDefaults: userDefaults, forKey: "Aileron_factor", default_val: "1.0")
         Elevator_factor.text = get_string(userDefaults: userDefaults, forKey: "Elevator_factor", default_val: "1.0")
         Rudder_factor.text = get_string(userDefaults: userDefaults, forKey: "Rudder_factor", default_val: "1.5")
+        Throttle_copy.text = get_string(userDefaults: userDefaults, forKey: "Throttle_copy", default_val: "3")
         
         IP_Address.delegate = self
         Port.delegate = self
@@ -174,11 +175,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @objc func udp_send(aileron: Float, elevator: Float, rudder: Float, throttle: Float) {
         var variables: [Float] = [aileron, elevator, rudder, throttle]
         var output_ui_obj: [UILabel] = [Aileron_value, Elevator_value, Rudder_value, Throttle_value]
-        var copy_number: [Int] = [1, 1, 1, 1]
+        var copy_number: [Int] = [1, 1, 1, Int(Throttle_copy.text!)]
         var data = Data(count: 0)
         for i in 0...3 {
             output_ui_obj[i].text = variables[i].description
-            for j in 1...copy_number {
+            for j in 0..<copy_number[i] {
                 data.append(Data(Data(buffer: UnsafeBufferPointer(start: &variables[i], count: 1)).reversed())) // 通过 reversed 得到 big-endian 的结果
             }
         }
@@ -227,6 +228,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         userDefaults.set(Aileron_factor.text!, forKey: "Aileron_factor")
         userDefaults.set(Elevator_factor.text!, forKey: "Elevator_factor")
         userDefaults.set(Rudder_factor.text!, forKey: "Rudder_factor")
+        userDefaults.set(Throttle_copy.text!, forKey: "Throttle_copy")
         
         motionManager.startAccelerometerUpdates()
         motionManager.startGyroUpdates()
