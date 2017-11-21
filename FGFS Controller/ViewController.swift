@@ -37,6 +37,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var Az: UILabel!
     @IBOutlet weak var Hdg: UILabel!
     @IBOutlet weak var Info: UITextView!
+    @IBOutlet weak var Aileron_factor: UITextField!
+    @IBOutlet weak var Elevator_factor: UITextField!
+    @IBOutlet weak var Rudder_factor: UITextField!
     @IBOutlet weak var Aileron_value: UILabel!
     @IBOutlet weak var Elevator_value: UILabel!
     @IBOutlet weak var Rudder_value: UILabel!
@@ -60,6 +63,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         Frq.text = get_string(userDefaults: userDefaults, forKey: "Frq", default_val: "12")
         IP_Address.text = get_string(userDefaults: userDefaults, forKey: "IP_Address", default_val: "10.100.0.10")
         Port.text = get_string(userDefaults: userDefaults, forKey: "Port", default_val: "6789")
+        Aileron_factor.text = get_string(userDefaults: userDefaults, forKey: "Aileron_factor", default_val: "1.0")
+        Elevator_factor.text = get_string(userDefaults: userDefaults, forKey: "Elevator_factor", default_val: "1.0")
+        Rudder_factor.text = get_string(userDefaults: userDefaults, forKey: "Rudder_factor", default_val: "1.5")
         
         IP_Address.delegate = self
         Port.delegate = self
@@ -172,9 +178,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     @objc func update() {
         let raw_data = get_raw_data()
-        let a = Float(rel_angle(aileron_zero,  raw_data[0]) * 4 / Double.pi)
-        let e = Float(rel_angle(elevator_zero, raw_data[1]) * 4 / Double.pi)
-        let r = Float(rel_angle(rudder_zero,   raw_data[2]) * 6 / Double.pi)
+        let a = Float(rel_angle(aileron_zero,  raw_data[0]) * 4 / Double.pi * Double(Aileron_factor.text!)!)
+        let e = Float(rel_angle(elevator_zero, raw_data[1]) * 4 / Double.pi * Double(Elevator_factor.text!)!)
+        let r = Float(rel_angle(rudder_zero,   raw_data[2]) * 4 / Double.pi * Double(Rudder_factor.text!)!)
         Aileron.value = a
         Elevator.value = e
         Rudder.value = r
@@ -203,6 +209,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         userDefaults.set(Frq.text!, forKey: "Frq")
         userDefaults.set(IP_Address.text!, forKey: "IP_Address")
         userDefaults.set(Port.text!, forKey: "Port")
+        userDefaults.set(Aileron_factor.text!, forKey: "Aileron_factor")
+        userDefaults.set(Elevator_factor.text!, forKey: "Elevator_factor")
+        userDefaults.set(Rudder_factor.text!, forKey: "Rudder_factor")
         
         motionManager.startAccelerometerUpdates()
         motionManager.startGyroUpdates()
