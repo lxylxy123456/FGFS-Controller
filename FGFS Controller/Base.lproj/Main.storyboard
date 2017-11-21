@@ -1,21 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    FGFS-Controller - Using an iOS Device to Control FGFS
-    Copyright (C) 2017  lxylxy123456
-    
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
-    
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-    
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
--->
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="landscape">
         <adaptation id="fullscreen"/>
@@ -315,16 +298,30 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="mor-bo-pfR">
                                         <rect key="frame" x="463.5" y="0.0" width="171.5" height="343"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hy-BY-ppm">
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="s7V-Es-UDu">
                                                 <rect key="frame" x="0.0" y="0.0" width="171.5" height="32"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="32" id="se6-E2-gdy"/>
-                                                </constraints>
-                                                <state key="normal" title="Throttle"/>
-                                                <connections>
-                                                    <action selector="ThrottleZero:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oRe-a4-dk9"/>
-                                                </connections>
-                                            </button>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9hy-BY-ppm">
+                                                        <rect key="frame" x="0.0" y="0.0" width="123.5" height="32"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="32" id="se6-E2-gdy"/>
+                                                        </constraints>
+                                                        <state key="normal" title="Throttle"/>
+                                                        <connections>
+                                                            <action selector="ThrottleZero:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oRe-a4-dk9"/>
+                                                        </connections>
+                                                    </button>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hut-pl-Wjs">
+                                                        <rect key="frame" x="131.5" y="0.0" width="40" height="32"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="40" id="4Xt-uI-hhi"/>
+                                                        </constraints>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                </subviews>
+                                            </stackView>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="F3Q-ID-9EX">
                                                 <rect key="frame" x="-2" y="40" width="175.5" height="275.5"/>
                                             </slider>
@@ -336,7 +333,6 @@
                                             </label>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="9hy-BY-ppm" firstAttribute="top" secondItem="mor-bo-pfR" secondAttribute="top" id="mYi-kd-PqQ"/>
                                             <constraint firstAttribute="width" secondItem="mor-bo-pfR" secondAttribute="height" multiplier="1:2" id="nhn-ZS-jHU"/>
                                         </constraints>
                                     </stackView>
@@ -376,6 +372,7 @@
                         <outlet property="Rudder_factor" destination="6Lh-lL-kO7" id="8ZZ-0d-tYu"/>
                         <outlet property="Rudder_value" destination="2u3-ol-D3E" id="caO-7k-h7R"/>
                         <outlet property="Throttle" destination="F3Q-ID-9EX" id="BOG-08-ozu"/>
+                        <outlet property="Throttle_copy" destination="hut-pl-Wjs" id="GWE-oJ-hkN"/>
                         <outlet property="Throttle_value" destination="HXa-oc-uTk" id="VyA-5f-GCf"/>
                     </connections>
                 </viewController>
