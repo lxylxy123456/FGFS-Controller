@@ -50,6 +50,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var Aileron_factor: UITextField!
     @IBOutlet weak var Elevator_factor: UITextField!
     @IBOutlet weak var Rudder_factor: UITextField!
+    @IBOutlet weak var Aileron_copy: UITextField!
+    @IBOutlet weak var Elevator_copy: UITextField!
+    @IBOutlet weak var Rudder_copy: UITextField!
     @IBOutlet weak var Throttle_copy: UITextField!
     @IBOutlet weak var Aileron_value: UILabel!
     @IBOutlet weak var Elevator_value: UILabel!

@@ -146,12 +146,21 @@
                                                         </connections>
                                                     </button>
                                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ROf-7t-og8">
-                                                        <rect key="frame" x="76" y="0.0" width="325.5" height="31"/>
+                                                        <rect key="frame" x="76" y="0.0" width="305.5" height="31"/>
                                                     </slider>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1.0" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pi3-aj-yZR">
-                                                        <rect key="frame" x="407.5" y="0.0" width="48" height="30"/>
+                                                        <rect key="frame" x="387.5" y="0.0" width="36" height="30"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="48" id="upY-rV-IJj"/>
+                                                            <constraint firstAttribute="width" constant="36" id="upY-rV-IJj"/>
+                                                        </constraints>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="77j-1w-yPc">
+                                                        <rect key="frame" x="431.5" y="0.0" width="24" height="30"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="24" id="QUe-qT-5HB"/>
                                                         </constraints>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -176,12 +185,21 @@
                                                         </connections>
                                                     </button>
                                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="6N5-pR-7y5">
-                                                        <rect key="frame" x="76" y="0.0" width="325.5" height="31"/>
+                                                        <rect key="frame" x="76" y="0.0" width="305.5" height="31"/>
                                                     </slider>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1.0" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dnm-RB-4r9">
-                                                        <rect key="frame" x="407.5" y="0.0" width="48" height="30"/>
+                                                        <rect key="frame" x="387.5" y="0.0" width="36" height="30"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="48" id="iW5-uZ-xbp"/>
+                                                            <constraint firstAttribute="width" constant="36" id="iW5-uZ-xbp"/>
+                                                        </constraints>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="K6D-GK-wAd">
+                                                        <rect key="frame" x="431.5" y="0.0" width="24" height="30"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="24" id="pFD-g4-DZv"/>
                                                         </constraints>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -206,12 +224,21 @@
                                                         </connections>
                                                     </button>
                                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="DyW-YE-XG0">
-                                                        <rect key="frame" x="76" y="0.0" width="325.5" height="31"/>
+                                                        <rect key="frame" x="76" y="0.0" width="305.5" height="31"/>
                                                     </slider>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1.0" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Lh-lL-kO7">
-                                                        <rect key="frame" x="407.5" y="0.0" width="48" height="30"/>
+                                                        <rect key="frame" x="387.5" y="0.0" width="36" height="30"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="48" id="Znu-Cv-QLt"/>
+                                                            <constraint firstAttribute="width" constant="36" id="Znu-Cv-QLt"/>
+                                                        </constraints>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bKI-NX-1Lt">
+                                                        <rect key="frame" x="431.5" y="0.0" width="24" height="30"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="24" id="yeI-Hq-YLE"/>
                                                         </constraints>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -355,12 +382,14 @@
                     </view>
                     <connections>
                         <outlet property="Aileron" destination="ROf-7t-og8" id="AtY-jO-HiD"/>
+                        <outlet property="Aileron_copy" destination="77j-1w-yPc" id="2ed-dp-Tow"/>
                         <outlet property="Aileron_factor" destination="Pi3-aj-yZR" id="LrS-P8-74L"/>
                         <outlet property="Aileron_value" destination="f1r-Eb-qVF" id="apU-Du-Kb8"/>
                         <outlet property="Ax" destination="lHp-Ju-syF" id="ISj-VL-o43"/>
                         <outlet property="Ay" destination="MzP-dz-L66" id="aBU-Kh-qhQ"/>
                         <outlet property="Az" destination="Jgo-3m-wfu" id="ftt-wr-pmX"/>
                         <outlet property="Elevator" destination="6N5-pR-7y5" id="Ddn-vA-L5f"/>
+                        <outlet property="Elevator_copy" destination="K6D-GK-wAd" id="54Y-km-I45"/>
                         <outlet property="Elevator_factor" destination="dnm-RB-4r9" id="7lW-uk-yJz"/>
                         <outlet property="Elevator_value" destination="zSD-uX-jMP" id="NGB-XS-AZH"/>
                         <outlet property="Frq" destination="rEA-ff-ZhO" id="uWi-VN-y2R"/>
@@ -369,6 +398,7 @@
                         <outlet property="Info" destination="gGU-0G-yCL" id="PEF-3F-R7I"/>
                         <outlet property="Port" destination="D0G-J3-y09" id="2Po-Wn-JQN"/>
                         <outlet property="Rudder" destination="DyW-YE-XG0" id="yEA-NU-pnE"/>
+                        <outlet property="Rudder_copy" destination="bKI-NX-1Lt" id="7HJ-id-rdh"/>
                         <outlet property="Rudder_factor" destination="6Lh-lL-kO7" id="8ZZ-0d-tYu"/>
                         <outlet property="Rudder_value" destination="2u3-ol-D3E" id="caO-7k-h7R"/>
                         <outlet property="Throttle" destination="F3Q-ID-9EX" id="BOG-08-ozu"/>
