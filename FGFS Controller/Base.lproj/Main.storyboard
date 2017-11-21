@@ -304,6 +304,9 @@
                                                     <constraint firstAttribute="height" constant="32" id="se6-E2-gdy"/>
                                                 </constraints>
                                                 <state key="normal" title="Throttle"/>
+                                                <connections>
+                                                    <action selector="ThrottleZero:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oRe-a4-dk9"/>
+                                                </connections>
                                             </button>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="F3Q-ID-9EX">
                                                 <rect key="frame" x="-2" y="40" width="175.5" height="275.5"/>

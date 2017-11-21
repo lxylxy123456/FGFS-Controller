@@ -197,6 +197,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let raw_data = get_raw_data()
         rudder_zero = raw_data[2]
     }
+    @IBAction func ThrottleZero(_ sender: Any) {
+        UIApplication.shared.open(URL(string: "https://github.com/lxylxy123456/FGFS-controller/")!)
+    }
     @IBAction func Send(_ sender: Any) {
         let frequency:Double? = Double(Frq.text!)
         let address:String? = IP_Address.text!
