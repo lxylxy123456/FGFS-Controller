@@ -173,11 +173,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @objc func udp_send(aileron: Float, elevator: Float, rudder: Float, throttle: Float) {
         var variables: [Float] = [aileron, elevator, rudder, throttle]
         var output_ui_obj: [UILabel] = [Aileron_value, Elevator_value, Rudder_value, Throttle_value]
+        var copy_number: [Int] = [1, 1, 1, 1]
         var data = Data(count: 0)
         for i in 0...3 {
             output_ui_obj[i].text = variables[i].description
-            data.append(Data(Data(buffer: UnsafeBufferPointer(start: &variables[i], count: 1)).reversed())) // 通过 reversed 得到 big-endian 的结果
+            for j in 1...copy_number {
+                data.append(Data(Data(buffer: UnsafeBufferPointer(start: &variables[i], count: 1)).reversed())) // 通过 reversed 得到 big-endian 的结果
+            }
         }
+        
         if let result: Result? = client?.send(data: data){
             Info.text = result?.error.debugDescription
         }
