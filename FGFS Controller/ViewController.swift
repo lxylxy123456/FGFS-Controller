@@ -123,9 +123,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 return -angle
             }
         }
-        ax = ax - Double(0.1 * Float(arc4random()) / Float(UINT32_MAX))
-        ay = ay - Double(0.1 * Float(arc4random()) / Float(UINT32_MAX))
-        az = az - Double(0.1 * Float(arc4random()) / Float(UINT32_MAX))
         if let headingData = locationManager.heading {
             hdg = headingData.magneticHeading
         }
