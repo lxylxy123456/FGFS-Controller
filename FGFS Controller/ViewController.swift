@@ -72,7 +72,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         func initTextField(_ userDefaults: UserDefaults, _ UI_Object: UITextField, _ forKey: String) {
             UI_Object.delegate = self
             if let ans = userDefaults.string(forKey: forKey) {
-                UI_Object.text = ans!
+                UI_Object.text = ans
             }
         }
         
