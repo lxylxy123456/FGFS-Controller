@@ -230,9 +230,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         let port:Int? = Int(Port.text!)
         
         let userDefaults: UserDefaults = UserDefaults.standard
-        userDefaults.set(Frq.text!,             forKey: "Frq")
         userDefaults.set(IP_Address.text!,      forKey: "IP_Address")
         userDefaults.set(Port.text!,            forKey: "Port")
+        userDefaults.set(Frq.text!,             forKey: "Frq")
         userDefaults.set(Aileron_factor.text!,  forKey: "Aileron_factor")
         userDefaults.set(Elevator_factor.text!, forKey: "Elevator_factor")
         userDefaults.set(Rudder_factor.text!,   forKey: "Rudder_factor")
