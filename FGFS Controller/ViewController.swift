@@ -26,13 +26,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
     let motionManager = CMMotionManager()
     let locationManager = CLLocationManager()
     var timer: Timer!
-    var ax: Double = -0.8
-    var ay: Double =  0.2
-    var az: Double = -0.4
-    var hdg: Double = 1.5
-    var aileron_zero: Double = 0.0
-    var elevator_zero: Double = 0.0
-    var rudder_zero: Double = 0.0
+    var ax:     Double = -0.8
+    var ay:     Double =  0.2
+    var az:     Double = -0.4
+    var hdg:    Double =  150
+    var aileron_zero:   Double = 0.0
+    var elevator_zero:  Double = 0.0
+    var rudder_zero:    Double = 0.0
     var client: UDPClient? = nil
     
     @IBOutlet weak var IP_Address: UITextField!
@@ -238,9 +238,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         userDefaults.set(Throttle_copy.text!,   forKey: "Throttle_copy")
         
         motionManager.startAccelerometerUpdates()
-        motionManager.startGyroUpdates()
-        // motionManager.startMagnetometerUpdates()
-        motionManager.startDeviceMotionUpdates()
         locationManager.startUpdatingHeading()
         
         if timer != nil {
