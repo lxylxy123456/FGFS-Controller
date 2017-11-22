@@ -62,7 +62,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        func initTextBox(_ userDefaults: UserDefaults, _ UI_Object: UITextField, _ forKey: String, _ default_val: String) {
+        func initTextField(_ userDefaults: UserDefaults, _ UI_Object: UITextField, _ forKey: String, _ default_val: String) {
             let ans = userDefaults.string(forKey: forKey)
             if ans == nil {
                 UI_Object.text = default_val
@@ -74,16 +74,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         
         let UD: UserDefaults = UserDefaults.standard
-        initTextBox(UD, Frq,                "Frq",              "12")
-        initTextBox(UD, IP_Address,         "IP_Address",       "10.100.0.10")
-        initTextBox(UD, Port,               "Port",             "6789")
-        initTextBox(UD, Aileron_factor,     "Aileron_factor",   "1.0")
-        initTextBox(UD, Elevator_factor,    "Elevator_factor",  "1.0")
-        initTextBox(UD, Rudder_factor,      "Rudder_factor",    "1.5")
-        initTextBox(UD, Aileron_copy,       "Aileron_copy",     "1")
-        initTextBox(UD, Elevator_copy,      "Elevator_copy",    "1")
-        initTextBox(UD, Rudder_copy,        "Rudder_copy",      "1")
-        initTextBox(UD, Throttle_copy,      "Throttle_copy",    "3")
+        initTextField(UD, Frq,              "Frq",              "12")
+        initTextField(UD, IP_Address,       "IP_Address",       "10.100.0.10")
+        initTextField(UD, Port,             "Port",             "6789")
+        initTextField(UD, Aileron_factor,   "Aileron_factor",   "1.0")
+        initTextField(UD, Elevator_factor,  "Elevator_factor",  "1.0")
+        initTextField(UD, Rudder_factor,    "Rudder_factor",    "1.5")
+        initTextField(UD, Aileron_copy,     "Aileron_copy",     "1")
+        initTextField(UD, Elevator_copy,    "Elevator_copy",    "1")
+        initTextField(UD, Rudder_copy,      "Rudder_copy",      "1")
+        initTextField(UD, Throttle_copy,    "Throttle_copy",    "3")
         
         Throttle.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2.0)
     }
