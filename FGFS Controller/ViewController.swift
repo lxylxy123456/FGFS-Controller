@@ -33,6 +33,13 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var aileron_zero:   Double = 0.0
     var elevator_zero:  Double = 0.0
     var rudder_zero:    Double = 0.0
+    var aileron_factor:     Double = 1.0
+    var elevator_factor:    Double = 1.0
+    var rudder_factor:      Double = 1.0
+    var aileron_copy:   Int = 1
+    var elevator_copy:  Int = 1
+    var rudder_copy:    Int = 1
+    var throttle_copy:  Int = 1
     var client: UDPClient? = nil
     
     @IBOutlet weak var IP_Address: UITextField!
@@ -62,28 +69,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        func initTextField(_ userDefaults: UserDefaults, _ UI_Object: UITextField, _ forKey: String, _ default_val: String) {
-            let ans = userDefaults.string(forKey: forKey)
-            if ans == nil {
-                UI_Object.text = default_val
-            }
-            else {
+        func initTextField(_ userDefaults: UserDefaults, _ UI_Object: UITextField, _ forKey: String) {
+            UI_Object.delegate = self
+            if let ans = userDefaults.string(forKey: forKey) {
                 UI_Object.text = ans!
             }
-            UI_Object.delegate = self
         }
         
         let UD: UserDefaults = UserDefaults.standard
-        initTextField(UD, Frq,              "Frq",              "12")
-        initTextField(UD, IP_Address,       "IP_Address",       "10.100.0.10")
-        initTextField(UD, Port,             "Port",             "6789")
-        initTextField(UD, Aileron_factor,   "Aileron_factor",   "1.0")
-        initTextField(UD, Elevator_factor,  "Elevator_factor",  "1.0")
-        initTextField(UD, Rudder_factor,    "Rudder_factor",    "1.5")
-        initTextField(UD, Aileron_copy,     "Aileron_copy",     "1")
-        initTextField(UD, Elevator_copy,    "Elevator_copy",    "1")
-        initTextField(UD, Rudder_copy,      "Rudder_copy",      "1")
-        initTextField(UD, Throttle_copy,    "Throttle_copy",    "3")
+        initTextField(UD, IP_Address,       "IP_Address")
+        initTextField(UD, Port,             "Port")
+        initTextField(UD, Frq,              "Frq")
+        initTextField(UD, Aileron_factor,   "Aileron_factor")
+        initTextField(UD, Elevator_factor,  "Elevator_factor")
+        initTextField(UD, Rudder_factor,    "Rudder_factor")
+        initTextField(UD, Aileron_copy,     "Aileron_copy")
+        initTextField(UD, Elevator_copy,    "Elevator_copy")
+        initTextField(UD, Rudder_copy,      "Rudder_copy")
+        initTextField(UD, Throttle_copy,    "Throttle_copy")
         
         Throttle.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2.0)
     }
@@ -179,7 +182,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @objc func udp_send(aileron: Float, elevator: Float, rudder: Float, throttle: Float) {
         var variables: [Float] = [aileron, elevator, rudder, throttle]
         var output_ui_obj: [UILabel] = [Aileron_value, Elevator_value, Rudder_value, Throttle_value]
-        var copy_number: [Int] = [Int(Aileron_copy.text!)!, Int(Elevator_copy.text!)!, Int(Rudder_copy.text!)!, Int(Throttle_copy.text!)!]
+        var copy_number: [Int] = [aileron_copy, elevator_copy, rudder_copy, throttle_copy]
+
         var data = Data(count: 0)
         for i in 0...3 {
             output_ui_obj[i].text = variables[i].description
@@ -195,9 +199,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     @objc func update() {
         let raw_data = get_raw_data()
-        let a = Float(rel_angle(aileron_zero,  raw_data[0]) * 4 / Double.pi * Double(Aileron_factor.text!)!)
-        let e = Float(rel_angle(elevator_zero, raw_data[1]) * 4 / Double.pi * Double(Elevator_factor.text!)!)
-        let r = Float(rel_angle(rudder_zero,   raw_data[2]) * 4 / Double.pi * Double(Rudder_factor.text!)!)
+        let a = Float(rel_angle(aileron_zero,  raw_data[0]) * 4 / Double.pi * aileron_factor)
+        let e = Float(rel_angle(elevator_zero, raw_data[1]) * 4 / Double.pi * elevator_factor)
+        let r = Float(rel_angle(rudder_zero,   raw_data[2]) * 4 / Double.pi * rudder_factor)
         Aileron.value = a
         Elevator.value = e
         Rudder.value = r
@@ -236,6 +240,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
         userDefaults.set(Elevator_copy.text!,   forKey: "Elevator_copy")
         userDefaults.set(Rudder_copy.text!,     forKey: "Rudder_copy")
         userDefaults.set(Throttle_copy.text!,   forKey: "Throttle_copy")
+        
+        aileron_factor  = Double(Aileron_factor.text!)!
+        elevator_factor = Double(Elevator_factor.text!)!
+        rudder_factor   = Double(Rudder_factor.text!)!
+        aileron_copy    = Int(Aileron_copy.text!)!
+        elevator_copy   = Int(Elevator_copy.text!)!
+        rudder_copy     = Int(Rudder_copy.text!)!
+        throttle_copy   = Int(Throttle_copy.text!)!
         
         motionManager.startAccelerometerUpdates()
         locationManager.startUpdatingHeading()
