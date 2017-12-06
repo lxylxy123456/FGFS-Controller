@@ -65,6 +65,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var Elevator_value: UILabel!
     @IBOutlet weak var Rudder_value: UILabel!
     @IBOutlet weak var Throttle_value: UILabel!
+    @IBOutlet weak var Aileron_switch: UISwitch!
+    @IBOutlet weak var Elevator_switch: UISwitch!
+    @IBOutlet weak var Rudder_switch: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -199,12 +202,27 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     @objc func update() {
         let raw_data = get_raw_data()
-        let a = Float(rel_angle(aileron_zero,  raw_data[0]) * 4 / Double.pi * aileron_factor)
-        let e = Float(rel_angle(elevator_zero, raw_data[1]) * 4 / Double.pi * elevator_factor)
-        let r = Float(rel_angle(rudder_zero,   raw_data[2]) * 4 / Double.pi * rudder_factor)
-        Aileron.value = a
-        Elevator.value = e
-        Rudder.value = r
+        var a = Float(rel_angle(aileron_zero,  raw_data[0]) * 4 / Double.pi * aileron_factor)
+        var e = Float(rel_angle(elevator_zero, raw_data[1]) * 4 / Double.pi * elevator_factor)
+        var r = Float(rel_angle(rudder_zero,   raw_data[2]) * 4 / Double.pi * rudder_factor)
+        if Aileron_switch.isOn {
+            Aileron.value = a
+        }
+        else {
+            a = Aileron.value
+        }
+        if Elevator_switch.isOn {
+            Elevator.value = e
+        }
+        else {
+            e = Elevator.value
+        }
+        if Rudder_switch.isOn {
+            Rudder.value = r
+        }
+        else {
+            r = Rudder.value
+        }
         let t = Throttle.value
         udp_send(aileron: a, elevator: e, rudder: r, throttle: t)
     }
@@ -212,14 +230,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func AileronZero(_ sender: Any) {
         let raw_data = get_raw_data()
         aileron_zero = raw_data[0]
+        Aileron.value = 0
     }
     @IBAction func ElevatorZero(_ sender: Any) {
         let raw_data = get_raw_data()
         elevator_zero = raw_data[1]
+        Elevator.value = 0
     }
     @IBAction func RudderZero(_ sender: Any) {
         let raw_data = get_raw_data()
         rudder_zero = raw_data[2]
+        Rudder.value = 0
     }
     @IBAction func ThrottleZero(_ sender: Any) {
         UIApplication.shared.open(URL(string: "https://github.com/lxylxy123456/FGFS-controller/")!)
