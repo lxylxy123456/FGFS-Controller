@@ -83,29 +83,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         text_field_obj_list = [IP_Address, Port, Frq, Aileron_factor, Elevator_factor, Rudder_factor, Aileron_copy, Elevator_copy, Rudder_copy, Throttle_copy]
         text_field_name_list = ["IP_Address", "Port", "Frq", "Aileron_factor", "Elevator_factor", "Rudder_factor", "Aileron_copy", "Elevator_copy", "Rudder_copy", "Throttle_copy"]
-        let text_field_list = [
-            [IP_Address,       "IP_Address"],
-            [Port,             "Port"],
-            [Frq,              "Frq"],
-            [Aileron_factor,   "Aileron_factor"],
-            [Elevator_factor,  "Elevator_factor"],
-            [Rudder_factor,    "Rudder_factor"],
-            [Aileron_copy,     "Aileron_copy"],
-            [Elevator_copy,    "Elevator_copy"],
-            [Rudder_copy,      "Rudder_copy"],
-            [Throttle_copy,    "Throttle_copy"],
-            ]
+        
         let UD: UserDefaults = UserDefaults.standard
-        initTextField(UD, IP_Address,       "IP_Address")
-        initTextField(UD, Port,             "Port")
-        initTextField(UD, Frq,              "Frq")
-        initTextField(UD, Aileron_factor,   "Aileron_factor")
-        initTextField(UD, Elevator_factor,  "Elevator_factor")
-        initTextField(UD, Rudder_factor,    "Rudder_factor")
-        initTextField(UD, Aileron_copy,     "Aileron_copy")
-        initTextField(UD, Elevator_copy,    "Elevator_copy")
-        initTextField(UD, Rudder_copy,      "Rudder_copy")
-        initTextField(UD, Throttle_copy,    "Throttle_copy")
+        for i in 0..<text_field_obj_list.count {
+            initTextField(UD, text_field_obj_list[i], text_field_name_list[i])
+        }
         
         Throttle.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2.0)
     }
@@ -267,17 +249,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
             let address:String? = IP_Address.text!
             let port:Int? = Int(Port.text!)
             
-            let userDefaults: UserDefaults = UserDefaults.standard
-            userDefaults.set(IP_Address.text!,      forKey: "IP_Address")
-            userDefaults.set(Port.text!,            forKey: "Port")
-            userDefaults.set(Frq.text!,             forKey: "Frq")
-            userDefaults.set(Aileron_factor.text!,  forKey: "Aileron_factor")
-            userDefaults.set(Elevator_factor.text!, forKey: "Elevator_factor")
-            userDefaults.set(Rudder_factor.text!,   forKey: "Rudder_factor")
-            userDefaults.set(Aileron_copy.text!,    forKey: "Aileron_copy")
-            userDefaults.set(Elevator_copy.text!,   forKey: "Elevator_copy")
-            userDefaults.set(Rudder_copy.text!,     forKey: "Rudder_copy")
-            userDefaults.set(Throttle_copy.text!,   forKey: "Throttle_copy")
+            let UD: UserDefaults = UserDefaults.standard
+            
+            for i in 0..<text_field_obj_list.count {
+                UD.set(text_field_obj_list[i].text!, forKey: text_field_name_list[i])
+            }
             
             aileron_factor  = Double(Aileron_factor.text!)!
             elevator_factor = Double(Elevator_factor.text!)!
@@ -287,8 +263,24 @@ class ViewController: UIViewController, UITextFieldDelegate {
             rudder_copy     = Int(Rudder_copy.text!)!
             throttle_copy   = Int(Throttle_copy.text!)!
             
-            motionManager.startAccelerometerUpdates()
-            locationManager.startUpdatingHeading()
+            if aileron_copy > 0 || elevator_copy > 0 {
+                motionManager.startAccelerometerUpdates()
+            }
+            
+            if aileron_copy == 0 {
+                Aileron_switch.isOn = false
+            }
+            
+            if elevator_copy == 0 {
+                Elevator_switch.isOn = false
+            }
+            
+            if rudder_copy > 0 {
+                locationManager.startUpdatingHeading()
+            }
+            else {
+                Rudder_switch.isOn = false
+            }
             
             if timer != nil {
                 timer.invalidate()
