@@ -81,8 +81,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 UI_Object.text = ans
             }
         }
-        text_field_obj_list = 
-        text_field_name_list
+        text_field_obj_list = [IP_Address, Port, Frq, Aileron_factor, Elevator_factor, Rudder_factor, Aileron_copy, Elevator_copy, Rudder_copy, Throttle_copy]
+        text_field_name_list = ["IP_Address", "Port", "Frq", "Aileron_factor", "Elevator_factor", "Rudder_factor", "Aileron_copy", "Elevator_copy", "Rudder_copy", "Throttle_copy"]
         let text_field_list = [
             [IP_Address,       "IP_Address"],
             [Port,             "Port"],
