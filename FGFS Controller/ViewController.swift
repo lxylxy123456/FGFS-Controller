@@ -42,9 +42,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var throttle_copy:  Int = 1
     var client: UDPClient? = nil
     
+    let text_field_list = []
+    
     @IBOutlet weak var IP_Address: UITextField!
     @IBOutlet weak var Port: UITextField!
     @IBOutlet weak var Frq: UITextField!
+    @IBOutlet weak var SendSwitch: UISwitch!
     @IBOutlet weak var Aileron: UISlider!
     @IBOutlet weak var Elevator: UISlider!
     @IBOutlet weak var Rudder: UISlider!
@@ -245,49 +248,50 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func ThrottleZero(_ sender: Any) {
         UIApplication.shared.open(URL(string: "https://github.com/lxylxy123456/FGFS-controller/")!)
     }
-    @IBAction func Send(_ sender: Any) {
-        let frequency:Double? = Double(Frq.text!)
-        let address:String? = IP_Address.text!
-        let port:Int? = Int(Port.text!)
-        
-        let userDefaults: UserDefaults = UserDefaults.standard
-        userDefaults.set(IP_Address.text!,      forKey: "IP_Address")
-        userDefaults.set(Port.text!,            forKey: "Port")
-        userDefaults.set(Frq.text!,             forKey: "Frq")
-        userDefaults.set(Aileron_factor.text!,  forKey: "Aileron_factor")
-        userDefaults.set(Elevator_factor.text!, forKey: "Elevator_factor")
-        userDefaults.set(Rudder_factor.text!,   forKey: "Rudder_factor")
-        userDefaults.set(Aileron_copy.text!,    forKey: "Aileron_copy")
-        userDefaults.set(Elevator_copy.text!,   forKey: "Elevator_copy")
-        userDefaults.set(Rudder_copy.text!,     forKey: "Rudder_copy")
-        userDefaults.set(Throttle_copy.text!,   forKey: "Throttle_copy")
-        
-        aileron_factor  = Double(Aileron_factor.text!)!
-        elevator_factor = Double(Elevator_factor.text!)!
-        rudder_factor   = Double(Rudder_factor.text!)!
-        aileron_copy    = Int(Aileron_copy.text!)!
-        elevator_copy   = Int(Elevator_copy.text!)!
-        rudder_copy     = Int(Rudder_copy.text!)!
-        throttle_copy   = Int(Throttle_copy.text!)!
-        
-        motionManager.startAccelerometerUpdates()
-        locationManager.startUpdatingHeading()
-        
-        if timer != nil {
-            timer.invalidate()
-            client?.close()
+    @IBAction func Send_or_Stop(_ sender: UISwitch) {
+        if (SendSwitch.isOn) {
+            let frequency:Double? = Double(Frq.text!)
+            let address:String? = IP_Address.text!
+            let port:Int? = Int(Port.text!)
+            
+            let userDefaults: UserDefaults = UserDefaults.standard
+            userDefaults.set(IP_Address.text!,      forKey: "IP_Address")
+            userDefaults.set(Port.text!,            forKey: "Port")
+            userDefaults.set(Frq.text!,             forKey: "Frq")
+            userDefaults.set(Aileron_factor.text!,  forKey: "Aileron_factor")
+            userDefaults.set(Elevator_factor.text!, forKey: "Elevator_factor")
+            userDefaults.set(Rudder_factor.text!,   forKey: "Rudder_factor")
+            userDefaults.set(Aileron_copy.text!,    forKey: "Aileron_copy")
+            userDefaults.set(Elevator_copy.text!,   forKey: "Elevator_copy")
+            userDefaults.set(Rudder_copy.text!,     forKey: "Rudder_copy")
+            userDefaults.set(Throttle_copy.text!,   forKey: "Throttle_copy")
+            
+            aileron_factor  = Double(Aileron_factor.text!)!
+            elevator_factor = Double(Elevator_factor.text!)!
+            rudder_factor   = Double(Rudder_factor.text!)!
+            aileron_copy    = Int(Aileron_copy.text!)!
+            elevator_copy   = Int(Elevator_copy.text!)!
+            rudder_copy     = Int(Rudder_copy.text!)!
+            throttle_copy   = Int(Throttle_copy.text!)!
+            
+            motionManager.startAccelerometerUpdates()
+            locationManager.startUpdatingHeading()
+            
+            if timer != nil {
+                timer.invalidate()
+                client?.close()
+            }
+            
+            client = UDPClient(address: address!, port: Int32(port!))
+            
+            timer = Timer.scheduledTimer(timeInterval: 1.0 / frequency!, target: self, selector: #selector(ViewController.update), userInfo: nil, repeats: true)
         }
-        
-        client = UDPClient(address: address!, port: Int32(port!))
-        
-        timer = Timer.scheduledTimer(timeInterval: 1.0 / frequency!, target: self, selector: #selector(ViewController.update), userInfo: nil, repeats: true)
-    }
-    @IBAction func Stop(_ sender: Any) {
-        if timer != nil {
-            timer.invalidate()
-            client?.close()
+        else {
+            if timer != nil {
+                timer.invalidate()
+                client?.close()
+            }
         }
     }
-    
 }
 

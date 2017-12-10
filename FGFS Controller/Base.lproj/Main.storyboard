@@ -29,7 +29,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="455.5" height="60"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4Wd-Ms-3Ot">
-                                                        <rect key="frame" x="0.0" y="0.0" width="291.5" height="60"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="282.5" height="60"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IP Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SKb-yX-JBg">
                                                                 <rect key="frame" x="0.0" y="0.0" width="82" height="22"/>
@@ -38,7 +38,7 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="10.100.0.10" borderStyle="roundedRect" placeholder="IP Address" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ABK-mv-emb">
-                                                                <rect key="frame" x="0.0" y="30" width="291.5" height="30"/>
+                                                                <rect key="frame" x="0.0" y="30" width="282.5" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="30" id="MAl-bd-dj5"/>
                                                                 </constraints>
@@ -53,7 +53,7 @@
                                                         </constraints>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="oEx-Zi-5It">
-                                                        <rect key="frame" x="299.5" y="0.0" width="60" height="60"/>
+                                                        <rect key="frame" x="290.5" y="0.0" width="60" height="60"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Port" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OWM-eu-ULR">
                                                                 <rect key="frame" x="0.0" y="0.0" width="32.5" height="22"/>
@@ -78,7 +78,7 @@
                                                         </constraints>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="t5I-Qk-KJy">
-                                                        <rect key="frame" x="367.5" y="0.0" width="40" height="60"/>
+                                                        <rect key="frame" x="358.5" y="0.0" width="40" height="60"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frq" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CMX-bO-8H9">
                                                                 <rect key="frame" x="0.0" y="0.0" width="25.5" height="22"/>
@@ -102,30 +102,25 @@
                                                             <constraint firstAttribute="trailing" secondItem="rEA-ff-ZhO" secondAttribute="trailing" id="vaI-KM-sWH"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="4gs-Js-Tq3">
-                                                        <rect key="frame" x="415.5" y="0.0" width="40" height="60"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gWl-2v-aTk">
+                                                        <rect key="frame" x="406.5" y="0.0" width="49" height="60"/>
                                                         <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RAF-hd-kXO">
-                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="30"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YzB-c8-JH3">
+                                                                <rect key="frame" x="0.0" y="0.0" width="49" height="21"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="omI-d3-Pmu">
+                                                                <rect key="frame" x="0.0" y="29" width="51" height="31"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="40" id="pNf-3k-8ZB"/>
+                                                                    <constraint firstAttribute="height" constant="31" id="z3h-BR-DNS"/>
                                                                 </constraints>
-                                                                <state key="normal" title="Send"/>
                                                                 <connections>
-                                                                    <action selector="Send:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lJP-5o-u32"/>
+                                                                    <action selector="Send_or_Stop:" destination="BYZ-38-t0r" eventType="valueChanged" id="zCW-Jy-XwN"/>
                                                                 </connections>
-                                                            </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5IC-7i-Z4x">
-                                                                <rect key="frame" x="0.0" y="30" width="40" height="30"/>
-                                                                <state key="normal" title="Stop"/>
-                                                                <connections>
-                                                                    <action selector="Stop:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ffO-XE-kiE"/>
-                                                                </connections>
-                                                            </button>
+                                                            </switch>
                                                         </subviews>
-                                                        <constraints>
-                                                            <constraint firstItem="5IC-7i-Z4x" firstAttribute="height" secondItem="RAF-hd-kXO" secondAttribute="height" id="24C-ms-Bmn"/>
-                                                        </constraints>
                                                     </stackView>
                                                 </subviews>
                                                 <constraints>
@@ -422,6 +417,7 @@
                         <outlet property="Rudder_factor" destination="6Lh-lL-kO7" id="8ZZ-0d-tYu"/>
                         <outlet property="Rudder_switch" destination="Ihs-Il-7PT" id="KYW-1N-9P2"/>
                         <outlet property="Rudder_value" destination="2u3-ol-D3E" id="caO-7k-h7R"/>
+                        <outlet property="SendSwitch" destination="omI-d3-Pmu" id="BYp-wf-cK4"/>
                         <outlet property="Throttle" destination="F3Q-ID-9EX" id="BOG-08-ozu"/>
                         <outlet property="Throttle_copy" destination="hut-pl-Wjs" id="GWE-oJ-hkN"/>
                         <outlet property="Throttle_value" destination="HXa-oc-uTk" id="VyA-5f-GCf"/>
