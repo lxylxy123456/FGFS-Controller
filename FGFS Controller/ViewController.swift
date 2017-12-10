@@ -41,8 +41,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var rudder_copy:    Int = 1
     var throttle_copy:  Int = 1
     var client: UDPClient? = nil
-    var text_field_obj_list: [UITextField] = []
-    var text_field_name_list: [String] = []
+    var ui_text_field_obj_list: [UITextField] = []
+    var ui_text_field_name_list: [String] = []
+    var ui_stepper_obj_list: [UIStepper] = []
+    var ui_stepper_name_list: [String] = []
     
     @IBOutlet weak var IP_Address: UITextField!
     @IBOutlet weak var Port: UITextField!
@@ -60,10 +62,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var Aileron_factor: UITextField!
     @IBOutlet weak var Elevator_factor: UITextField!
     @IBOutlet weak var Rudder_factor: UITextField!
-    @IBOutlet weak var Aileron_copy: UITextField!
-    @IBOutlet weak var Elevator_copy: UITextField!
-    @IBOutlet weak var Rudder_copy: UITextField!
-    @IBOutlet weak var Throttle_copy: UITextField!
+    @IBOutlet weak var Aileron_copy: UILabel!
+    @IBOutlet weak var Elevator_copy: UILabel!
+    @IBOutlet weak var Rudder_copy: UILabel!
+    @IBOutlet weak var Throttle_copy: UILabel!
     @IBOutlet weak var Aileron_value: UILabel!
     @IBOutlet weak var Elevator_value: UILabel!
     @IBOutlet weak var Rudder_value: UILabel!
@@ -71,22 +73,32 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var Aileron_switch: UISwitch!
     @IBOutlet weak var Elevator_switch: UISwitch!
     @IBOutlet weak var Rudder_switch: UISwitch!
+    @IBOutlet weak var Aileron_stepper: UIStepper!
+    @IBOutlet weak var Elevator_stepper: UIStepper!
+    @IBOutlet weak var Rudder_stepper: UIStepper!
+    @IBOutlet weak var Throttle_stepper: UIStepper!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        func initTextField(_ userDefaults: UserDefaults, _ UI_Object: UITextField, _ forKey: String) {
-            UI_Object.delegate = self
-            if let ans = userDefaults.string(forKey: forKey) {
-                UI_Object.text = ans
-            }
-        }
-        text_field_obj_list = [IP_Address, Port, Frq, Aileron_factor, Elevator_factor, Rudder_factor, Aileron_copy, Elevator_copy, Rudder_copy, Throttle_copy]
-        text_field_name_list = ["IP_Address", "Port", "Frq", "Aileron_factor", "Elevator_factor", "Rudder_factor", "Aileron_copy", "Elevator_copy", "Rudder_copy", "Throttle_copy"]
+        ui_text_field_obj_list = [IP_Address, Port, Frq, Aileron_factor, Elevator_factor, Rudder_factor]
+        ui_text_field_name_list = ["IP_Address", "Port", "Frq", "Aileron_factor", "Elevator_factor", "Rudder_factor"]
+        ui_stepper_obj_list = [Aileron_stepper, Elevator_stepper, Rudder_stepper, Throttle_stepper]
+        ui_stepper_name_list = ["Aileron_stepper", "Elevator_stepper", "Rudder_stepper", "Throttle_stepper"]
+        let ui_stepper_ind_list = [AileronStep, ElevatorStep, RudderStep, ThrottleStep]
         
         let UD: UserDefaults = UserDefaults.standard
-        for i in 0..<text_field_obj_list.count {
-            initTextField(UD, text_field_obj_list[i], text_field_name_list[i])
+        for i in 0..<ui_text_field_obj_list.count {
+            ui_text_field_obj_list[i].delegate = self
+            if let ans = UD.string(forKey: ui_text_field_name_list[i]) {
+                ui_text_field_obj_list[i].text = ans
+            }
+        }
+        for i in 0..<ui_stepper_obj_list.count {
+            if let ans = UD.string(forKey: ui_stepper_name_list[i]) {
+                ui_stepper_obj_list[i].value = Double(ans)!
+                ui_stepper_ind_list[i](ui_stepper_obj_list[i])
+            }
         }
         
         Throttle.transform = CGAffineTransform(rotationAngle: -CGFloat.pi/2.0)
@@ -243,6 +255,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func ThrottleZero(_ sender: Any) {
         UIApplication.shared.open(URL(string: "https://github.com/lxylxy123456/FGFS-controller/")!)
     }
+    @IBAction func AileronStep(_ sender: Any) {
+        Aileron_copy.text = Int(Aileron_stepper.value).description
+    }
+    @IBAction func ElevatorStep(_ sender: Any) {
+        Elevator_copy.text = Int(Elevator_stepper.value).description
+    }
+    @IBAction func RudderStep(_ sender: Any) {
+        Rudder_copy.text = Int(Rudder_stepper.value).description
+    }
+    @IBAction func ThrottleStep(_ sender: Any) {
+        Throttle_copy.text = Int(Throttle_stepper.value).description
+    }
     @IBAction func Send_or_Stop(_ sender: UISwitch) {
         if (SendSwitch.isOn) {
             let frequency:Double? = Double(Frq.text!)
@@ -251,30 +275,26 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
             let UD: UserDefaults = UserDefaults.standard
             
-            for i in 0..<text_field_obj_list.count {
-                UD.set(text_field_obj_list[i].text!, forKey: text_field_name_list[i])
+            for i in 0..<ui_text_field_obj_list.count {
+                UD.set(ui_text_field_obj_list[i].text!, forKey: ui_text_field_name_list[i])
+            }
+            for i in 0..<ui_stepper_obj_list.count {
+                UD.set(ui_stepper_obj_list[i].value.description, forKey: ui_stepper_name_list[i])
             }
             
             aileron_factor  = Double(Aileron_factor.text!)!
             elevator_factor = Double(Elevator_factor.text!)!
             rudder_factor   = Double(Rudder_factor.text!)!
-            aileron_copy    = Int(Aileron_copy.text!)!
-            elevator_copy   = Int(Elevator_copy.text!)!
-            rudder_copy     = Int(Rudder_copy.text!)!
+            aileron_copy    = Int(Aileron_stepper.value)
+            elevator_copy   = Int(Elevator_stepper.value)
+            rudder_copy     = Int(Rudder_stepper.value)
             throttle_copy   = Int(Throttle_copy.text!)!
             
             if aileron_copy > 0 || elevator_copy > 0 {
                 motionManager.startAccelerometerUpdates()
             }
-            
-            if aileron_copy == 0 {
-                Aileron_switch.isOn = false
-            }
-            
-            if elevator_copy == 0 {
-                Elevator_switch.isOn = false
-            }
-            
+            if aileron_copy == 0 {  Aileron_switch.isOn = false }
+            if elevator_copy == 0 { Elevator_switch.isOn = false }
             if rudder_copy > 0 {
                 locationManager.startUpdatingHeading()
             }
