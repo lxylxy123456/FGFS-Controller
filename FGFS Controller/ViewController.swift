@@ -41,19 +41,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var rudder_copy:    Int = 1
     var throttle_copy:  Int = 1
     var client: UDPClient? = nil
-    
-    let text_field_list = [
-        [IP_Address,       "IP_Address"], 
-        [Port,             "Port"], 
-        [Frq,              "Frq"], 
-        [Aileron_factor,   "Aileron_factor"], 
-        [Elevator_factor,  "Elevator_factor"], 
-        [Rudder_factor,    "Rudder_factor"], 
-        [Aileron_copy,     "Aileron_copy"], 
-        [Elevator_copy,    "Elevator_copy"], 
-        [Rudder_copy,      "Rudder_copy"], 
-        [Throttle_copy,    "Throttle_copy"], 
-    ]
+    var text_field_obj_list: [UITextField] = []
+    var text_field_name_list: [String] = []
     
     @IBOutlet weak var IP_Address: UITextField!
     @IBOutlet weak var Port: UITextField!
@@ -92,7 +81,20 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 UI_Object.text = ans
             }
         }
-        
+        text_field_obj_list = 
+        text_field_name_list
+        let text_field_list = [
+            [IP_Address,       "IP_Address"],
+            [Port,             "Port"],
+            [Frq,              "Frq"],
+            [Aileron_factor,   "Aileron_factor"],
+            [Elevator_factor,  "Elevator_factor"],
+            [Rudder_factor,    "Rudder_factor"],
+            [Aileron_copy,     "Aileron_copy"],
+            [Elevator_copy,    "Elevator_copy"],
+            [Rudder_copy,      "Rudder_copy"],
+            [Throttle_copy,    "Throttle_copy"],
+            ]
         let UD: UserDefaults = UserDefaults.standard
         initTextField(UD, IP_Address,       "IP_Address")
         initTextField(UD, Port,             "Port")
