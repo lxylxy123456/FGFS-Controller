@@ -42,7 +42,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var throttle_copy:  Int = 1
     var client: UDPClient? = nil
     
-    let text_field_list = []
+    let text_field_list = [
+        [IP_Address,       "IP_Address"], 
+        [Port,             "Port"], 
+        [Frq,              "Frq"], 
+        [Aileron_factor,   "Aileron_factor"], 
+        [Elevator_factor,  "Elevator_factor"], 
+        [Rudder_factor,    "Rudder_factor"], 
+        [Aileron_copy,     "Aileron_copy"], 
+        [Elevator_copy,    "Elevator_copy"], 
+        [Rudder_copy,      "Rudder_copy"], 
+        [Throttle_copy,    "Throttle_copy"], 
+    ]
     
     @IBOutlet weak var IP_Address: UITextField!
     @IBOutlet weak var Port: UITextField!
