@@ -5,4 +5,4 @@ https://guides.cocoapods.org/syntax/podfile.html
 	在项目文件夹创建 Podfile ，根据语法添加需要的工程文件
 https://cocoapods.org/
 	在项目文件夹运行 pod install ，然后改用自动生成的 .xcworkspace 工作
-
+_ = UDPClient(address: "10.100.0.10", port: 6789).send(data: Data(base64Encoded: "ZAo=")!)
