@@ -40,6 +40,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var elevator_copy:  Int = 1
     var rudder_copy:    Int = 1
     var throttle_copy:  Int = 1
+    var r_angle: Double = 0
     var client: UDPClient? = nil
     var ui_text_field_obj_list: [UITextField] = []
     var ui_text_field_name_list: [String] = []
@@ -146,7 +147,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         func v_angle(_ a: [Double], _ b: [Double], _ c: [Double]) -> Double {
             // 从 a 到 b 按 c 进行右手定则旋转的角度，返回 [-Double.pi, Double.pi)
-            // 需要保证 a 和 b 都和 c 垂直
             let angle: Double = acos(v_dot(a, b) / v_abs(a) / v_abs(b))
             if v_dot(v_cross(a, b), c) > 0 {
                 return angle
@@ -155,27 +155,30 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 return -angle
             }
         }
-        if let headingData = locationManager.heading {
-            hdg = headingData.magneticHeading
-        }
-        if let accelerometerData = motionManager.accelerometerData {
-            ax = accelerometerData.acceleration.x
-            ay = accelerometerData.acceleration.y
-            az = accelerometerData.acceleration.z
-        }
-        let vw: [Double] = [ ax,  ay,  az]  // 重力相对于手机的方向，和地面垂直
+        var vw: [Double] = [0.0, 0.0, 0.9]  // 重力相对于手机的方向，和地面垂直
         let vi: [Double] = [1.0, 0.0, 0.0]  // x 单位向量(相对手机固定)，很少平行地面
         let vj: [Double] = [0.0, 1.0, 0.0]  // y 单位向量(相对手机固定)，很少垂直地面
         let vk: [Double] = [0.0, 0.0, 1.0]  // z 单位向量(相对手机固定)
+        if let accelerometerData = motionManager.accelerometerData {
+            vw = [accelerometerData.acceleration.x, accelerometerData.acceleration.y, accelerometerData.acceleration.z]
+        }
+        if let motionData = motionManager.deviceMotion {
+            vw = [motionData.gravity.x, motionData.gravity.y, motionData.gravity.z]
+        }
+        if let headingData = locationManager.heading {
+            hdg = headingData.magneticHeading
+        }
         
-        let e_angle: Double = v_angle(v_proj(v_neg(vw), vj), vi, vj)
+        // let e_angle: Double = v_angle(v_proj(v_neg(vw), vj), vi, vj)
         let a_angle: Double = v_angle(vi, v_proj(v_neg(vw), vk), vk)
-        let r_angle: Double = -(hdg * Double.pi / 180)
+        let e_angle: Double = v_angle(v_neg(vw), vk, vj)
+        var r_angle: Double = -(hdg * Double.pi / 180)
+        r_angle = r_angle + Double(atan((sin(a_angle) * cos(e_angle + Double.pi / 2)) / cos(a_angle)))
         
         // Output
-        Ax.text = Float(ax).description
-        Ay.text = Float(ay).description
-        Az.text = Float(az).description
+        Ax.text = Float(vw[0]).description
+        Ay.text = Float(vw[1]).description
+        Az.text = Float(vw[2]).description
         Hdg.text = Float(hdg).description
         return [a_angle, e_angle, r_angle]
     }
@@ -206,7 +209,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }
         
         if let result: Result? = client?.send(data: data){
-            Info.text = result?.error.debugDescription
+            let desc = result?.error.debugDescription
+            if desc != "nil" {
+                Info.text = desc
+            }
         }
     }
 
@@ -292,6 +298,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
             if aileron_copy > 0 || elevator_copy > 0 {
                 motionManager.startAccelerometerUpdates()
+                motionManager.startDeviceMotionUpdates()	
             }
             if aileron_copy == 0 {  Aileron_switch.isOn = false }
             if elevator_copy == 0 { Elevator_switch.isOn = false }
