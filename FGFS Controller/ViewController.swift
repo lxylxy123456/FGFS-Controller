@@ -158,12 +158,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
         var vw: [Double] = [0.0, 0.0, 0.9]  // 重力相对于手机的方向，和地面垂直
         let vi: [Double] = [1.0, 0.0, 0.0]  // x 单位向量(相对手机固定)，很少平行地面
         let vj: [Double] = [0.0, 1.0, 0.0]  // y 单位向量(相对手机固定)，很少垂直地面
-        let vk: [Double] = [0.0, 0.0, 1.0]  // z 单位向量(相对手机固定)
-        if let accelerometerData = motionManager.accelerometerData {
-            vw = [accelerometerData.acceleration.x, accelerometerData.acceleration.y, accelerometerData.acceleration.z]
-        }
+        let vk: [Double] = [0.0, 0.0, 1.0]  // z 单位向量(相对手机固定)
         if let motionData = motionManager.deviceMotion {
             vw = [motionData.gravity.x, motionData.gravity.y, motionData.gravity.z]
+        }
+        else if let accelerometerData = motionManager.accelerometerData {
+            vw = [accelerometerData.acceleration.x, accelerometerData.acceleration.y, accelerometerData.acceleration.z]
         }
         if let headingData = locationManager.heading {
             hdg = headingData.magneticHeading
@@ -171,7 +171,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         // let e_angle: Double = v_angle(v_proj(v_neg(vw), vj), vi, vj)
         let a_angle: Double = v_angle(vi, v_proj(v_neg(vw), vk), vk)
-        let e_angle: Double = v_angle(v_neg(vw), vk, vj)
+        let e_angle: Double = v_angle(v_proj(v_neg(vw), vj), vk, vj)
         var r_angle: Double = -(hdg * Double.pi / 180)
         r_angle = r_angle + Double(atan((sin(a_angle) * cos(e_angle + Double.pi / 2)) / cos(a_angle)))
         
@@ -298,7 +298,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
             
             if aileron_copy > 0 || elevator_copy > 0 {
                 motionManager.startAccelerometerUpdates()
-                motionManager.startDeviceMotionUpdates()	
+                motionManager.startDeviceMotionUpdates()
             }
             if aileron_copy == 0 {  Aileron_switch.isOn = false }
             if elevator_copy == 0 { Elevator_switch.isOn = false }
