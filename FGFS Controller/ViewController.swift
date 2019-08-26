@@ -207,7 +207,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 data.append(Data(Data(buffer: UnsafeBufferPointer(start: &variables[i], count: 1)).reversed())) // 通过 reversed 得到 big-endian 的结果
             }
         }
-        
+        Info.text = data.base64EncodedString()
         if let result: Result? = client?.send(data: data){
             let desc = result?.error.debugDescription
             if desc != "nil" {
@@ -317,12 +317,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
             client = UDPClient(address: address!, port: Int32(port!))
             
             timer = Timer.scheduledTimer(timeInterval: 1.0 / frequency!, target: self, selector: #selector(ViewController.update), userInfo: nil, repeats: true)
+            UIApplication.shared.isIdleTimerDisabled = true
         }
         else {
             if timer != nil {
                 timer.invalidate()
                 client?.close()
             }
+            UIApplication.shared.isIdleTimerDisabled = false
         }
     }
 }
